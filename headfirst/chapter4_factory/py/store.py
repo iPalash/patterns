@@ -12,7 +12,7 @@ class PizzaStore(ABC):
 
     def order(self, type):
         pizza = self.create(type)
-
+        pizza.prepare()
         pizza.bake()
         pizza.pack()
 
