@@ -1,7 +1,7 @@
 package chapter3_decorator
 
 type Mocha struct {
-	b Beverage
+	Beverage
 }
 
 func AddMocha(b Beverage) Beverage {
@@ -9,15 +9,24 @@ func AddMocha(b Beverage) Beverage {
 }
 
 func (m *Mocha) getDescription() string {
-	return m.b.getDescription() + `, Mocha`
+	return m.Beverage.getDescription() + `, Mocha`
 }
 
 func (m *Mocha) cost() float32 {
-	return m.b.cost() + 0.1
+	cost := m.Beverage.cost()
+	switch m.Beverage.GetSize() {
+	case Tall:
+		return cost + 0.1
+	case Grand:
+		return cost + 0.2
+	case Venti:
+		return cost + 0.3
+	}
+	return cost
 }
 
 type Milk struct {
-	b Beverage
+	Beverage
 }
 
 func AddMilk(b Beverage) Beverage {
@@ -25,15 +34,15 @@ func AddMilk(b Beverage) Beverage {
 }
 
 func (m *Milk) getDescription() string {
-	return m.b.getDescription() + `, Milk`
+	return m.Beverage.getDescription() + `, Milk`
 }
 
 func (m *Milk) cost() float32 {
-	return m.b.cost() + 0.1
+	return m.Beverage.cost() + 0.1
 }
 
 type Soy struct {
-	b Beverage
+	Beverage
 }
 
 func AddSoy(b Beverage) Beverage {
@@ -41,9 +50,9 @@ func AddSoy(b Beverage) Beverage {
 }
 
 func (m *Soy) getDescription() string {
-	return m.b.getDescription() + `, Soy`
+	return m.Beverage.getDescription() + `, Soy`
 }
 
 func (m *Soy) cost() float32 {
-	return m.b.cost() + 0.05
+	return m.Beverage.cost() + 0.05
 }
