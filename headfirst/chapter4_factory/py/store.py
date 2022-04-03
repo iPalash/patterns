@@ -1,21 +1,39 @@
 from abc import ABC
 
 from factory import SimplePizzaFactory
+from abc import ABC,abstractmethod
+from pizza import Margherita, Pizza, VeggiePizza, VeganPizza
 
 
-class PizzaStore:
-
-    def __init__(self, factory : SimplePizzaFactory) -> None:
-        self.factory = factory
+class PizzaStore(ABC):
+    @abstractmethod
+    def create(self,type) -> Pizza:
+        pass
 
     def order(self, type):
-        pizza = self.factory.createPizza(type)
+        pizza = self.create(type)
 
         pizza.bake()
         pizza.pack()
 
+class IndiaPizzaStore(PizzaStore):
+    def create(self, type) -> Pizza:
+        if type=='veggie':
+            return VeggiePizza()
+        raise Exception("Only veg")
+    
+class NYPizzaStore(PizzaStore):
+    def create(self,type) -> Pizza:
+        if type=='veggie':
+            return VeganPizza()
+        elif type=='Margherita':
+            return Margherita()
+        raise Exception("invalid type")
+
 
 if __name__=='__main__':
-    ps = PizzaStore(SimplePizzaFactory())
-    ps.order("veggie")
-    ps.order("margherita")
+    nps = NYPizzaStore()
+    nps.order("veggie")
+
+    ips = IndiaPizzaStore()
+    ips.order("veggie")

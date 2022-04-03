@@ -17,6 +17,11 @@ class VeggiePizza(Pizza):
         super().__init__()
         self.name = "VeggiePizza"
 
+class VeganPizza(Pizza):
+    def __init__(self) -> None:
+        super().__init__()
+        self.name = "VeganPizza"
+
 class Margherita(Pizza):
     def __init__(self) -> None:
         super().__init__()
