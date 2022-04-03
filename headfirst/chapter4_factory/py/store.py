@@ -1,9 +1,8 @@
-from abc import ABC
 
-from factory import SimplePizzaFactory
 from abc import ABC,abstractmethod
-from pizza import Margherita, Pizza, VeggiePizza, VeganPizza
-
+from pizzatypes import Margherita, VeggiePizza, VeganPizza
+from pizza import Pizza
+from factory import IndiaIngrediantFactory, NYIngredientFactory
 
 class PizzaStore(ABC):
     @abstractmethod
@@ -17,17 +16,26 @@ class PizzaStore(ABC):
         pizza.pack()
 
 class IndiaPizzaStore(PizzaStore):
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.ingredientFactory = IndiaIngrediantFactory()
+
     def create(self, type) -> Pizza:
         if type=='veggie':
-            return VeggiePizza()
+            return VeggiePizza(self.ingredientFactory)
         raise Exception("Only veg")
     
 class NYPizzaStore(PizzaStore):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ingredientFactory = NYIngredientFactory()
+
     def create(self,type) -> Pizza:
         if type=='veggie':
-            return VeganPizza()
+            return VeganPizza(self.ingredientFactory)
         elif type=='Margherita':
-            return Margherita()
+            return Margherita(self.ingredientFactory)
         raise Exception("invalid type")
 
 
