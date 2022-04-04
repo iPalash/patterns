@@ -12,18 +12,16 @@ type OnlyOneEver struct {
 
 var instance *OnlyOneEver
 
-var lock = &sync.Mutex{}
+var once = &sync.Once{}
 
 func GetOnlyOneEver() *OnlyOneEver {
-
-	if instance == nil {
-		lock.Lock()
-		defer lock.Unlock()
+	once.Do(func() {
 		if instance == nil {
 			id := rand.Intn(100)
 			fmt.Println("Created instance", id)
 			instance = &OnlyOneEver{id}
 		}
-	}
+	})
+
 	return instance
 }
